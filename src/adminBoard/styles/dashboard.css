@@ -1,0 +1,633 @@
+/**
+ * Dashboard Styles
+ *
+ * This CSS file defines the core styling for the admin dashboard interface.
+ * It includes:
+ * - Theme variables for both light and dark modes
+ * - Main layout structure (sidebar, content area)
+ * - Navigation components and interactive elements
+ * - Data display components (cards, tables, indicators)
+ * 
+ * This file uses CSS variables (custom properties) to maintain consistent
+ * theming throughout the application and support theme switching.
+ */
+
+/* Theme Variables - Defines colors and styling values used throughout the app */
+:root {
+  /* Light Theme (Default) */
+  --bg-primary: #f7fafc;
+  --bg-sidebar: #1a202c;
+  --bg-card: white;
+  --text-primary: #2d3748;
+  --text-secondary: #4a5568;
+  --text-sidebar: #cbd5e0;
+  --text-sidebar-hover: white;
+  --border-color: #e2e8f0;
+  --primary-color: #4299e1;
+  --primary-hover: #3182ce;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --table-header-bg: #f7fafc;
+  --table-border: #e2e8f0;
+  --table-row-hover: #f7fafc;
+  --status-completed-bg: #c6f6d5;
+  --status-completed-text: #22543d;
+  --status-pending-bg: #e9d8fd;
+  --status-pending-text: #553c9a;
+}
+
+/* Dark Theme Variables - Applied when the body has data-theme="dark" attribute */
+[data-theme="dark"] {
+  --bg-primary: #1a202c;
+  --bg-sidebar: #2d3748;
+  --bg-card: #2d3748;
+  --text-primary: #f7fafc;
+  --text-secondary: #e2e8f0;
+  --text-sidebar: #a0aec0;
+  --text-sidebar-hover: white;
+  --border-color: #4a5568;
+  --primary-color: #4299e1;
+  --primary-hover: #63b3ed;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --table-header-bg: #2d3748;
+  --table-border: #4a5568;
+  --table-row-hover: #2c3a4f;
+  --status-completed-bg: rgba(72, 187, 120, 0.2);
+  --status-completed-text: #9ae6b4;
+  --status-pending-bg: rgba(139, 92, 246, 0.2);
+  --status-pending-text: #d6bcfa;
+}
+
+/* Main Layout Structure */
+
+/* Main dashboard container - uses flexbox for sidebar and content */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Sidebar styling - fixed width with dark background */
+.dashboard-sidebar {
+  width: 250px;
+  background-color: var(--bg-sidebar);
+  color: var(--text-sidebar);
+  padding: 1rem;
+  overflow: hidden;
+  z-index: 10;
+}
+
+/* Main content area - fills remaining space */
+.dashboard-content {
+  flex: 1;
+  padding: 2rem;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Dashboard Header Styling */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.dashboard-header h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.user-info {
+  font-size: 0.875rem;
+  color: #4a5568;
+}
+
+/* Sidebar Navigation Styling */
+.sidebar-nav {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+}
+
+/* Logo and title section */
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  align-self: center;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.macro-logo {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+}
+
+.sidebar-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-sidebar-hover);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Navigation menu list */
+.nav-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.nav-items li {
+  width: 100%;
+}
+
+/* Navigation links and buttons styling */
+.nav-items a, .nav-button {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  color: var(--text-sidebar);
+  text-decoration: none;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+/* Hover states for navigation items */
+.nav-items a:hover, .nav-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-sidebar-hover);
+}
+
+/* Active state for the current page */
+.nav-items a.active {
+  background-color: var(--primary-color);
+  color: var(--text-sidebar-hover);
+}
+
+/* Icon styling within navigation items */
+.icon {
+  display: inline-flex;
+  margin-right: 0.75rem;
+  font-size: 1.25rem;
+  width: 1.25rem;
+  justify-content: center;
+}
+
+.nav-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Sidebar Footer Section */
+.sidebar-footer {
+  margin-top: auto;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Theme toggle and logout buttons */
+.theme-toggle-button,
+.logout-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: var(--text-sidebar);
+  cursor: pointer;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  text-align: left;
+  font-size: 1rem;
+  outline: none;
+}
+
+/* Hover states for footer buttons */
+.theme-toggle-button:hover,
+.logout-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-sidebar-hover);
+}
+
+/* Icons for special buttons */
+.icon-logout,
+.icon-moon,
+.icon-sun {
+  display: inline-flex;
+  margin-right: 0.75rem;
+  font-size: 1.25rem;
+  width: 1.25rem;
+  justify-content: center;
+}
+
+/* Theme toggle icons */
+.icon-moon:before {
+  content: "🌙";
+}
+
+.icon-sun:before {
+  content: "☀️";
+}
+
+/* Navigation and action icons */
+.icon-logout:before {
+  content: "🚪";
+}
+
+.icon-dashboard:before {
+  content: "📊";
+}
+
+.icon-users:before {
+  content: "👥";
+}
+
+/* Dashboard Content Components */
+
+/* Summary cards grid layout */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+/* Individual card styling */
+.summary-card {
+  background-color: var(--bg-card);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px 0 var(--shadow-color), 0 1px 2px 0 var(--shadow-color);
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Card hover effect */
+.summary-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Card title */
+.summary-card h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+/* Card main value display */
+.card-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Special styling for types card values */
+.types-card .card-value {
+  font-size: 1.25rem;
+}
+
+/* Frame types grid layout */
+.frame-types {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+/* Individual frame type display */
+.frame-type {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #f7fafc;
+}
+
+/* Frame type label */
+.frame-type-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #718096;
+  margin-bottom: 0.25rem;
+}
+
+/* Frame type value */
+.frame-type-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+/* Table Section Styles */
+
+/* Container for FITS data table */
+.latest-fits-section {
+  background-color: var(--bg-card);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px 0 var(--shadow-color), 0 1px 2px 0 var(--shadow-color);
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+/* Section title */
+.latest-fits-section h2 {
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
+
+/* Data table styling */
+.fits-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Table header cells */
+.fits-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--table-border);
+  background-color: var(--table-header-bg);
+}
+
+/* Table data cells */
+.fits-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--table-border);
+  color: var(--text-primary);
+}
+
+/* Remove border from last row */
+.fits-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Row hover effect */
+.fits-table tr:hover {
+  background-color: var(--table-row-hover);
+}
+
+/* Status Indicators */
+
+/* Completed status badge */
+.status-completed {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  background-color: var(--status-completed-bg);
+  color: var(--status-completed-text);
+}
+
+/* Pending status badge */
+.status-pending {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  background-color: var(--status-pending-bg);
+  color: var(--status-pending-text);
+}
+
+/* Processing status badge */
+.status-processing {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  background-color: #bee3f8;
+  color: #2a4365;
+}
+
+/* Failed status badge */
+.status-failed {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  background-color: #fed7d7;
+  color: #822727;
+}
+
+/* Action Buttons */
+
+/* Container for table row action buttons */
+.actions-cell {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Download button styling */
+.download-button {
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.download-button:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Metadata view button styling */
+.metadata-button {
+  padding: 0.5rem 1rem;
+  background-color: #48bb78;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.metadata-button:hover {
+  background-color: #38a169;
+}
+
+/* Modal Components */
+
+/* Modal overlay background */
+.metadata-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+/* Modal container */
+.metadata-modal {
+  background-color: white;
+  width: 90%;
+  max-width: 800px;
+  border-radius: 0.5rem;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Modal header section */
+.metadata-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Modal title */
+.metadata-modal-header h3 {
+  font-size: 1.25rem;
+  margin: 0;
+  color: #2d3748;
+}
+
+/* Modal close button */
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #a0aec0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-button:hover {
+  color: #4a5568;
+}
+
+/* Modal content area */
+.metadata-modal-body {
+  padding: 1.5rem;
+  max-height: calc(90vh - 4rem);
+  overflow-y: auto;
+}
+
+/* Metadata display grid */
+.metadata-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Metadata group section */
+.metadata-section {
+  margin-bottom: 1.5rem;
+}
+
+/* Metadata section title */
+.metadata-section h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  color: #2d3748;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.5rem;
+}
+
+/* Individual metadata item */
+.metadata-item {
+  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Metadata property label */
+.metadata-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #718096;
+  margin-bottom: 0.25rem;
+}
+
+/* Metadata property value */
+.metadata-value {
+  color: #4a5568;
+}
+
+/* Modal footer */
+.metadata-modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Additional components */
+
+/* User management button container */
+.user-management-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+/* User management navigation button */
+.user-management-button {
+  padding: 0.75rem 1.5rem;
+  background-color: #4299e1;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.user-management-button:hover {
+  background-color: #3182ce;
+}
+
+/* Welcome message styling */
+.welcome-message {
+  color: var(--text-primary);
+} 

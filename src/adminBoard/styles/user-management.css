@@ -1,0 +1,441 @@
+/* 
+ * User Management Styles
+ *
+ * This CSS file contains styles for the User Management page of the admin dashboard.
+ * It defines the layout, component styling, and responsive behavior for:
+ * - The user list table
+ * - Add user form
+ * - Delete user confirmation modal
+ * - Status indicators and actions
+ *
+ * The file also includes specific styles for both light and dark themes.
+ */
+
+/* Import dashboard layout styles */
+@import url('./dashboard.css');
+
+/* Main grid layout for user management content */
+.user-management-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+/* Responsive layout for smaller screens */
+@media (max-width: 768px) {
+  .user-management-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Container styling for the main sections */
+.users-list-section, 
+.add-user-section {
+  background-color: var(--bg-card);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px 0 var(--shadow-color), 0 1px 2px 0 var(--shadow-color);
+}
+
+/* Section headers */
+.users-list-section h2,
+.add-user-section h2 {
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+/* Users List Component Styles */
+.users-list {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+}
+
+.users-list h2 {
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #2d3748;
+}
+
+/* Container for list controls like refresh button */
+.user-list-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+/* Refresh button styling */
+.refresh-button {
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: background-color 0.2s;
+}
+
+.refresh-button:hover {
+  background-color: var(--primary-hover);
+}
+
+.refresh-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Users table styling */
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-table th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+  background-color: var(--table-header-bg);
+}
+
+.users-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.users-table tr:hover {
+  background-color: var(--table-row-hover);
+}
+
+.users-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Position indicator tags */
+.position-tag {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+}
+
+/* Manager position tag */
+.position-tag.manager {
+  background-color: rgba(72, 187, 120, 0.2);
+  color: #48bb78;
+}
+
+/* Member position tag */
+.position-tag.member {
+  background-color: rgba(66, 153, 225, 0.2);
+  color: #4299e1;
+}
+
+/* Dark theme styles for position tags */
+[data-theme="dark"] .position-tag.manager {
+  background-color: rgba(72, 187, 120, 0.3);
+  color: #9ae6b4;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .position-tag.member {
+  background-color: rgba(66, 153, 225, 0.3);
+  color: #90cdf4;
+  font-weight: 600;
+}
+
+/* Enhanced dark mode styles for better visibility */
+[data-theme="dark"] .users-list {
+  background-color: var(--bg-card);
+}
+
+[data-theme="dark"] .users-list h2 {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .users-table th {
+  color: #e2e8f0; /* Lighter color for table headers in dark mode */
+  font-weight: 700;
+}
+
+[data-theme="dark"] .add-user-section h2 {
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .form-group label {
+  color: #e2e8f0; /* Brighter label text for dark mode */
+  font-weight: 500;
+}
+
+[data-theme="dark"] .form-group input::placeholder,
+[data-theme="dark"] .form-group select::placeholder {
+  color: #a0aec0; /* Lighter placeholder text for better visibility */
+}
+
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group select {
+  background-color: #2d3748; /* Slightly lighter than background for contrast */
+  color: #f7fafc;
+  border-color: #4a5568;
+}
+
+[data-theme="dark"] .form-group input:focus,
+[data-theme="dark"] .form-group select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.25);
+}
+
+[data-theme="dark"] .delete-button {
+  background-color: #e53e3e;
+}
+
+[data-theme="dark"] .delete-button:hover {
+  background-color: #c53030;
+}
+
+/* Delete user button */
+.delete-button {
+  padding: 0.5rem 1rem;
+  background-color: #f56565;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.delete-button:hover {
+  background-color: #e53e3e;
+}
+
+/* Add User Form Styles */
+.add-user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Error message styling */
+.error-message {
+  background-color: #fed7d7;
+  color: #c53030;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.875rem;
+}
+
+/* Success message styling */
+.success-message {
+  background-color: #c6f6d5;
+  color: #276749;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.875rem;
+}
+
+/* Dark mode error and success messages */
+[data-theme="dark"] .error-message {
+  background-color: rgba(245, 101, 101, 0.2);
+  color: #feb2b2;
+  border-left: 3px solid #f56565;
+}
+
+[data-theme="dark"] .success-message {
+  background-color: rgba(72, 187, 120, 0.2);
+  color: #9ae6b4;
+  border-left: 3px solid #48bb78;
+}
+
+/* Form group styling (label + input) */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+/* Form input fields */
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+}
+
+/* Add user submit button */
+.add-user-button {
+  padding: 0.75rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 1rem;
+  transition: background-color 0.2s;
+}
+
+.add-user-button:hover {
+  background-color: var(--primary-hover);
+}
+
+.add-user-button:disabled {
+  background-color: #a0aec0;
+  cursor: not-allowed;
+}
+
+/* Delete Modal Styles */
+.delete-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.delete-modal {
+  background-color: var(--bg-card);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 10px 15px -3px var(--shadow-color);
+}
+
+.delete-modal h3 {
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.delete-modal p {
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
+
+.delete-modal strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Additional styling for modal in dark mode */
+[data-theme="dark"] .delete-modal strong {
+  color: #f7fafc;
+}
+
+[data-theme="dark"] .delete-modal h3 {
+  color: #f7fafc;
+}
+
+/* Modal action buttons container */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Cancel button styling */
+.cancel-button {
+  padding: 0.5rem 1rem;
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  background-color: var(--table-row-hover);
+}
+
+/* Delete confirmation button */
+.delete-confirm-button {
+  padding: 0.5rem 1rem;
+  background-color: #f56565;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.delete-confirm-button:hover {
+  background-color: #e53e3e;
+}
+
+/* Loading Indicators */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* Spinner for dark mode */
+[data-theme="dark"] .loading-spinner {
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #63b3ed;
+}
+
+/* Loading spinner animation */
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #3182ce;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Loading text */
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #718096;
+  font-style: italic;
+}
+
+[data-theme="dark"] .loading {
+  color: #a0aec0;
+} 
